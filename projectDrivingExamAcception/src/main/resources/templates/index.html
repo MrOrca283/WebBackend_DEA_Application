@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+     <article class="text-center">
+     <hgroup>
+     <h1>Приветствуем в системе экзаменов в водители.</h1>
+     </hgroup>
+     <p>
+         <small>Последнее обновление данных: <strong th:text="${#temporals.format(#temporals.createNow(), 'dd.MM.yyyy HH:mm:ss')}"></strong></small>
+     </p>
+     </article>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

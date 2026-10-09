@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+    <article style="max-width: 600px; margin: 0 auto;">
+        <hgroup>
+            <h1>Добавление кандидата в водители</h1>
+            <p>Заполните информацию о заявлении канидата</p>
+        </hgroup>
+        <form th:action="@{/candidates/add}"
+              th:method="post"
+              th:object="${candidateModel}">
+            <label for="applicationId">
+                Номер заявления
+                <input th:field="*{applicationId}"
+                       th:errorclass="is-invalid"
+                       type="text" 
+                       id="applicationId"
+                       placeholder="Введите номер заявления"
+                       required/>
+                <small th:if="${#fields.hasErrors('applicationId')}" th:errors="*{applicationId}" class="text-danger"></small>
+            </label>
+
+            <label for="fullName">
+                ФИО
+                <input th:field="*{fullName}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="fullName"
+                       placeholder="Введите ФИО"
+                       required/>
+                <small th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="text-danger"></small>
+            </label>
+
+            <label for="passportSeriesAndNumber">
+                Паспорт
+                <input th:field="*{passportSeriesAndNumber}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="passportSeriesAndNumber"
+                       placeholder="Введите серию и номер паспорта"
+                       required/>
+                <small th:if="${#fields.hasErrors('passportSeriesAndNumber')}" th:errors="*{passportSeriesAndNumber}" class="text-danger"></small>
+            </label>
+
+            <label for="licenceType">
+                Тип прав (лицензии)
+                <input th:field="*{licenceType}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="licenceType"
+                       placeholder="Введите тип лицензии"
+                       required/>
+                <small th:if="${#fields.hasErrors('licenceType')}" th:errors="*{licenceType}" class="text-danger"></small>
+            </label>
+
+
+            <label for="theoryPassed" class="form-check-label">
+                <input th:field="*{theoryPassed}"
+                       th:errorclass="is-invalid"
+                       type="checkbox"
+                       id="theoryPassed"
+                       class="form-check-input"/>
+                Сдал ли кандидат теорию?
+            </label>
+            <div th:if="${#fields.hasErrors('theoryPassed')}" th:errors="*{theoryPassed}" class="text-danger"></div>
+
+
+
+
+            <label for="contact">
+                Контактные данные
+                <input th:field="*{contact}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="contact"
+                       placeholder="Введите почту или номер телефона кандидата"
+                       required/>
+                <small th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}" class="text-danger"></small>
+            </label>
+
+
+
+
+
+            <button type="submit">Добавить кандидата</button>
+        </form>
+    </article>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

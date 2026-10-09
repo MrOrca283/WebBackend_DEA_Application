@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+    <article style="max-width: 700px; margin: 0 auto;">
+        <hgroup>
+            <h1>Добавление бланка мед обследования кандидата</h1>
+            <p>Заполните информацию о кандидате</p>
+        </hgroup>
+        <form th:action="@{/medBlanks/add}"
+              th:method="post"
+              th:object="${medBlankModel}">
+
+            <div class="grid">
+                <label for="blankCode">
+                    Код бланка
+                    <input th:field="*{blankCode}"
+                           th:errorclass="is-invalid"
+                           type="text"
+                           id="blankCode"
+                           placeholder="Введите код с верхней части бланка"
+                           required/>
+                    <small th:if="${#fields.hasErrors('blankCode')}" th:errors="*{blankCode}" class="text-danger"></small>
+                </label>
+
+                <label for="passportSeriesAndNumber">
+                    Серия и номер паспорта
+                    <input th:field="*{passportSeriesAndNumber}"
+                           th:errorclass="is-invalid"
+                           type="text"
+                           id="passportSeriesAndNumber"
+                           placeholder="Введите серию и номер паспорта"
+                           required/>
+                    <small th:if="${#fields.hasErrors('passportSeriesAndNumber')}" th:errors="*{passportSeriesAndNumber}" class="text-danger"></small>
+                </label>
+            </div>
+
+            <label for="drivingCategory">
+                Категория прав
+                <input th:field="*{drivingCategory}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="drivingCategory"
+                       placeholder="Введите категорию на которую проводится обследование"
+                       required/>
+                <small th:if="${#fields.hasErrors('drivingCategory')}" th:errors="*{drivingCategory}" class="text-danger"></small>
+            </label>
+            </div>
+
+            <div class="grid">
+                <label for="dateOfHealthCheck">
+                    Дата проведения обследования
+                    <input th:field="*{dateOfHealthCheck}"
+                           th:errorclass="is-invalid"
+                           type="date"
+                           id="dateOfHealthCheck"
+                           required/>
+                    <small th:if="${#fields.hasErrors('dateOfHealthCheck')}" th:errors="*{dateOfHealthCheck}" class="text-danger"></small>
+                </label>
+            </div>
+
+            <label for="nervSystemDiagnosis">
+                Результаты приёма у невролога
+                <input th:field="*{nervSystemDiagnosis}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="nervSystemDiagnosis"
+                       placeholder="Введите заключение врача"
+                       required/>
+                <small th:if="${#fields.hasErrors('nervSystemDiagnosis')}" th:errors="*{nervSystemDiagnosis}" class="text-danger"></small>
+            </label>
+
+            <label for="eyeCheckDiagnosis">
+                Результаты приёма у окулиста
+                <input th:field="*{eyeCheckDiagnosis}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="eyeCheckDiagnosis"
+                       placeholder="Введите заключение врача"
+                       required/>
+                <small th:if="${#fields.hasErrors('eyeCheckDiagnosis')}" th:errors="*{eyeCheckDiagnosis}" class="text-danger"></small>
+            </label>
+
+            <label for="psyhicConditionDiagnosis">
+                Результаты приёма у психолога
+                <input th:field="*{psyhicConditionDiagnosis}"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       id="psyhicConditionDiagnosis"
+                       placeholder="Введите заключение врача"
+                       required/>
+                <small th:if="${#fields.hasErrors('psyhicConditionDiagnosis')}" th:errors="*{psyhicConditionDiagnosis}" class="text-danger"></small>
+            </label>
+
+            <label for="acceptedOnDrivingCategory" class="form-check-label">
+                <input th:field="*{acceptedOnDrivingCategory}"
+                       th:errorclass="is-invalid"
+                       type="checkbox"
+                       id="acceptedOnDrivingCategory"
+                       class="form-check-input"/>
+                Признан ли пациент годным к назначенной категории прав?
+            </label>
+            <div th:if="${#fields.hasErrors('acceptedOnDrivingCategory')}" th:errors="*{acceptedOnDrivingCategory}" class="text-danger"></div>
+
+
+
+            <button type="submit">Добавить мед бланк</button>
+        </form>
+    </article>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

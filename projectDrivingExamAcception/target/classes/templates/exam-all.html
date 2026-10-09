@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+    <hgroup>
+    <h1>Назначенные экзамены</h1>
+
+    </hgroup>
+    <div class="grid">
+        <div th:each="e : ${examInfos}" class="card">
+            <h3 th:text="${e.examId}"></h3>
+            <p><strong>Дата экзамена:</strong> <span th:text="${e.date}"></span></p>
+            <p><strong>Транспортное средство:</strong> <span th:text="${e.vehicleName}"></span></p>
+        </div>
+    </div>
+
+    <!-- Пагинация -->
+    <nav th:if="${totalPages != null && totalPages > 1}" aria-label="Pagination">
+        <ul style="display: flex; justify-content: center; list-style: none; padding: 0;">
+            <li th:if="${currentPage > 0}">
+                <a th:href="@{/exams/all(page=${currentPage - 1}, size=10)}" role="button" class="outline">Назад</a>
+            </li>
+            <li style="margin: 0 1rem; align-self: center;">
+                <span>Страница <strong th:text="${currentPage + 1}"></strong> из <strong th:text="${totalPages}"></strong></span>
+            </li>
+            <li th:if="${currentPage + 1 < totalPages}">
+                <a th:href="@{/exams/all(page=${currentPage + 1}, size=10)}" role="button" class="outline">Вперед</a>
+            </li>
+        </ul>
+    </nav>
+
+    <p th:if="${#lists.isEmpty(examInfos)}" class="text-center">
+        <em>Экзамены не найдены.</em>
+    </p>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+    <article style="max-width: 700px; margin: 0 auto;">
+        <hgroup>
+            <h1>Назначение экзамена</h1>
+            <p>Заполните паспорт экзаменуемого, дату экзамена и автомобиль для экзаменуемого</p>
+        </hgroup>
+        <form th:action="@{/exams/add}"
+              th:method="post"
+              th:object="${examModel}">
+
+
+            <div th:if="${unsuccessMessage}" class="alert alert-danger" role="alert">
+                <span th:text="${unsuccessMessage}"></span>
+            </div>
+
+            <div class="grid">
+                <label for="date">
+                    Дата экзамена
+                    <input th:field="*{date}"
+                           th:errorclass="is-invalid"
+                           type="date"
+                           id="date"
+                           required/>
+                    <small th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-danger"></small>
+                </label>
+
+                <label for="time">
+                    Время экзамена
+                    <input th:field="*{time}"
+                           th:errorclass="is-invalid"
+                           type="time"
+                           id="time"
+                           required/>
+                    <small th:if="${#fields.hasErrors('time')}" th:errors="*{time}" class="text-danger"></small>
+                </label>
+
+                <label for="vehicleName">
+                    Тип автомобиля
+                    <input th:field="*{vehicleName}"
+                           th:errorclass="is-invalid"
+                           type="text"
+                           id="vehicleName"
+                           placeholder="Введите марку и наименование транспортного средства"
+                           required/>
+                    <small th:if="${#fields.hasErrors('vehicleName')}" th:errors="*{vehicleName}" class="text-danger"></small>
+                </label>
+            </div>
+
+            <label for="applicationIds">
+                Номер заявления кандидата
+                <select id="applicationIds" th:field="*{applicationId}" required>
+                    <option value="">Выберите заявление...</option>
+                    <option th:each="applId : ${availableApplications}"
+                            th:value="${applId}"
+                            th:text="${applId}"></option>
+                </select>
+                <small th:if="${#fields.hasErrors('applicationId')}" th:errors="*{applicationId}" class="text-danger"></small>
+            </label>
+            <button type="submit">Добавить кандидата</button>
+
+
+
+        </form>
+    </article>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

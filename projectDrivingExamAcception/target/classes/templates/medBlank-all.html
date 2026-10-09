@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+    <hgroup>
+    <h1>Все медбланки</h1>
+    <p>Все медбланки в системе</p>
+    </hgroup>
+
+    <form method="get" action="/medBlanks/all">
+        <div class="grid">
+            <input type="search"
+                   name="search"
+                   th:value="${search}"
+                   placeholder="Поиск по паспорту"
+                   aria-label="Поиск">
+            <button type="submit">Найти</button>
+        </div>
+    </form>
+
+    <div class="grid">
+        <div th:each="e : ${medBlankInfos}" class="card">
+            <h3 th:text="${e.blankCode}"></h3>
+            <p>Дата обследования: <span th:text="${e.dateOfHealthCheck}">2026-01-01</span></p>
+            <p><strong>Серия и номер пасспорта:</strong> <span th:text="${e.passportSeriesAndNumber}"></span></p>
+            <p><strong>Проведено обследование на категорию:</strong> <span th:text="${e.drivingCategory}"></span></p>
+            <p><strong>Диагноз невролога:</strong> <span th:text="${#strings.abbreviate(e.nervSystemDiagnosis, 30)}"></span></p>
+            <p><strong>Диагноз окулиста:</strong> <span th:text="${#strings.abbreviate(e.eyeCheckDiagnosis, 30)}"></span></p>
+            <p><strong>Диагноз психолога:</strong> <span th:text="${#strings.abbreviate(e.psyhicConditionDiagnosis, 30)}"></span></p>
+            <p>Допущен ли пациент до категории прав: <span th:text="${e.acceptedOnDrivingCategory ? 'Да' : 'Нет'}"></span></p>
+        </div>
+
+
+    <!-- Пагинация -->
+    <nav th:if="${totalPages != null && totalPages > 1}" aria-label="Pagination">
+        <ul style="display: flex; justify-content: center; list-style: none; padding: 0;">
+            <li th:if="${currentPage > 0}">
+                <a th:href="@{/medBlanks/all(page=${currentPage - 1}, size=10)}" role="button" class="outline">Назад</a>
+            </li>
+            <li style="margin: 0 1rem; align-self: center;">
+                <span>Страница <strong th:text="${currentPage + 1}"></strong> из <strong th:text="${totalPages}"></strong></span>
+            </li>
+            <li th:if="${currentPage + 1 < totalPages}">
+                <a th:href="@{/medBlanks/all(page=${currentPage + 1}, size=10)}" role="button" class="outline">Вперед</a>
+            </li>
+        </ul>
+    </nav>
+
+    </div>
+    <p th:if="${#lists.isEmpty(allMedBlanks)}" class="text-center">
+        <em>Мед данные не найдены</em>
+    </p>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

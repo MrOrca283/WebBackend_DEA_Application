@@ -1,0 +1,28 @@
+<nav xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <ul>
+            <li><strong><a href="/" style="text-decoration: none;">Управление кандидатами</a></strong></li>
+        </ul>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li sec:authorize="hasAnyRole('ADMIN', 'POLICEMAN')"><a href="/candidates/add">Добавить кандидата</a></li>
+            <li sec:authorize="hasAnyRole('ADMIN', 'MEDIC')"><a href="/medBlanks/add">Добавить бланк обследования</a></li>
+            <li sec:authorize="hasAnyRole('ADMIN', 'POLICEMAN')"><a href="/exams/add">Назначить экзамен</a></li>
+            <li sec:authorize="hasAnyRole('ADMIN', 'POLICEMAN','USER')"><a href="/exams/all">Список экзаменов</a></li>
+            <li sec:authorize="hasAnyRole('ADMIN', 'POLICEMAN')"><a href="/candidates/all">Все кандидаты</a></li>
+            <li sec:authorize="hasAnyRole('ADMIN', 'MEDIC')"><a href="/medBlanks/all">Все бланки обследований</a></li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="/users/profile" role="button" class="secondary outline">
+                    <th:block sec:authentication="name"></th:block>
+                </a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <form th:method="post" th:action="@{/users/logout}" style="margin: 0;">
+                    <button type="submit" class="contrast outline">Выйти</button>
+                </form>
+            </li>
+            <li sec:authorize="!isAuthenticated()"><a href="/users/register" role="button">Регистрация</a></li>
+            <li sec:authorize="!isAuthenticated()"><a href="/users/login" role="button" class="secondary">Вход</a></li>
+        </ul>
+    </div>
+</nav>

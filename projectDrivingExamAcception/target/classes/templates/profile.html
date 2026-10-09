@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head"/>
+<body>
+<div th:replace="fragments/navbar"></div>
+<main class="container">
+  <hgroup>
+    <h1>Профиль пользователя</h1>
+    <p>Информация о вашей учетной записи</p>
+  </hgroup>
+  <article class="card">
+    <div class="grid">
+      <div th:object="${user}">
+        <h2 th:text="*{fullName}"></h2>
+        <p><strong>Логин:</strong> <span th:text="*{username}"></span></p>
+        <p><strong>Email:</strong> <span th:text="*{email}"></span></p>
+
+        <!-- Список экзаменов обычного пользователя -->
+
+        <div th:each="e : *{userExams}" class="card">
+          <h3 th:text="${e.examId}"></h3>
+          <p>Дата экзамена: <span th:text="${e.date}">2026-01-01</span></p>
+          <p>Время: <span th:text="${#temporals.format(time, 'HH:mm:ss')}">00:00:00</span></p>
+          <p><strong>Тип ТС:</strong> <span th:text="${e.vehicleName}"></span></p>
+        </div>
+
+        <div th:if="${#lists.isEmpty(user.userExams)}">
+          <em>У вас пока нет экзаменов.</em>
+        </div>
+
+
+
+        <div>
+          <strong>Роли:</strong>
+          <div sec:authentication="principal.authorities" style="margin-top: 0.5rem;"></div>
+        </div>
+      </div>
+      <div class="text-center">
+        <img src="/pic/user.png" alt="Профиль пользователя" style="width: 100%; max-width: 300px; border-radius: var(--pico-border-radius);">
+      </div>
+    </div>
+  </article>
+</main>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>
